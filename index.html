@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="BCDPRODUCTION LLC - Professional software development and monitoring solutions. Creator of Fleet GPU for Vast.AI monitoring.">
-    <title>BCDPRODUCTION LLC</title>
+    <meta name="keywords" content="BCDPRODUCTION, iOS development, monitoring solutions, Fleet GPU, software development">
+    <title>BCDPRODUCTION LLC - Professional App Development</title>
+    <link rel="icon" type="image/png" href="BCD_design_logo_black.png">
     <style>
         * {
             margin: 0;
@@ -12,319 +14,833 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-blue: #0200FF;
+            --bg-dark: #0a0a0a;
+            --bg-card: #0f0f0f;
+            --text-light: #e0e0e0;
+            --text-muted: #b0b0b0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #e0e0e0;
-            background-color: #0a0a0a;
+            color: var(--text-light);
+            background-color: var(--bg-dark);
+            overflow-x: hidden;
         }
 
-        .header {
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(2, 0, 255, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(-100%);
+            animation: slideDown 0.5s forwards;
+        }
+
+        @keyframes slideDown {
+            to { transform: translateY(0); }
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        nav .logo img {
+            width: 45px;
+            height: 45px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            font-size: 1.05em;
+        }
+
+        nav a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
-            padding: 80px 20px;
+            padding: 150px 20px 100px;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4.5em;
+            margin-bottom: 25px;
             font-weight: 700;
-            color: #0200ff;
+            background: linear-gradient(135deg, #0200FF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.3s;
         }
 
-        .header p {
-            font-size: 1.3em;
-            opacity: 0.95;
-            color: #b0b0b0;
+        .hero .tagline {
+            font-size: 1.8em;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.5s;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0150FF 100%);
+            color: white;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.7s;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(2, 0, 255, 0.5);
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 20px;
+            background-color: var(--bg-card);
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
 
-        .section {
-            padding: 60px 20px;
-        }
-
-        .section h2 {
-            font-size: 2.5em;
-            margin-bottom: 30px;
+        .section-title {
+            font-size: 3em;
             text-align: center;
+            margin-bottom: 60px;
             color: #ffffff;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
         }
 
-        /* About Section */
-        .about {
-            background-color: #0f0f0f;
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .about-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             text-align: center;
-            font-size: 1.1em;
-            line-height: 1.8;
-            color: #b0b0b0;
+            font-size: 1.3em;
+            line-height: 1.9;
+            color: var(--text-muted);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .about-content.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Featured App Section */
         .featured-app {
-            background-color: #0a0a0a;
-            padding: 80px 20px;
+            background-color: var(--bg-dark);
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-app::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(2, 0, 255, 0.08) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
         }
 
         .app-showcase {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .app-header {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .app-header.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .app-icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 22px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 120px;
+            height: 120px;
+            border-radius: 26px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s;
         }
 
-        .app-title {
-            text-align: left;
+        .app-icon:hover {
+            transform: scale(1.05) rotate(-2deg);
         }
 
         .app-title h3 {
-            font-size: 2.5em;
+            font-size: 3em;
             color: #ffffff;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .app-title p {
-            font-size: 1.2em;
+            font-size: 1.4em;
             color: #888;
         }
 
         .app-description {
-            font-size: 1.2em;
-            color: #b0b0b0;
-            line-height: 1.8;
-            margin-bottom: 40px;
-            max-width: 700px;
+            font-size: 1.3em;
+            color: var(--text-muted);
+            line-height: 1.9;
+            margin-bottom: 50px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .app-description.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .app-badges {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 50px;
+            gap: 20px;
+            margin-bottom: 60px;
             flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .app-badges.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .badge {
             background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            color: #4682ff;
-            border: 1px solid rgba(70, 130, 255, 0.3);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            color: var(--primary-blue);
+            border: 1px solid rgba(2, 0, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(2, 0, 255, 0.3);
+            border-color: rgba(2, 0, 255, 0.6);
         }
 
         .screenshots {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
         }
 
         .screenshot-card {
             background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
-            padding: 20px;
-            border-radius: 15px;
+            padding: 25px;
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .screenshot-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .screenshot-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(70, 130, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transform: translateY(-10px);
+            border-color: rgba(2, 0, 255, 0.4);
+            box-shadow: 0 20px 60px rgba(2, 0, 255, 0.3);
         }
 
         .screenshot-card img {
             width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .screenshot-card:hover img {
+            transform: scale(1.03);
         }
 
         .screenshot-card h4 {
             color: #ffffff;
-            margin-top: 15px;
-            font-size: 1.2em;
+            margin-top: 20px;
+            font-size: 1.4em;
         }
 
         .screenshot-card p {
             color: #888;
-            font-size: 0.95em;
-            margin-top: 8px;
+            font-size: 1em;
+            margin-top: 12px;
+            line-height: 1.6;
         }
 
         /* Services Section */
         .services {
-            background-color: #0f0f0f;
+            background-color: var(--bg-card);
+            padding: 100px 20px;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
         }
 
         .service-card {
             background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
-            padding: 30px;
-            border-radius: 10px;
+            padding: 40px 35px;
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .service-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(2, 0, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(70, 130, 255, 0.2);
-            border-color: rgba(70, 130, 255, 0.3);
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(2, 0, 255, 0.5);
+            box-shadow: 0 20px 60px rgba(2, 0, 255, 0.3);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.4s;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.2) rotate(5deg);
         }
 
         .service-card h3 {
-            color: #4682ff;
-            margin-bottom: 15px;
-            font-size: 1.5em;
+            color: var(--primary-blue);
+            margin-bottom: 18px;
+            font-size: 1.6em;
+            position: relative;
+            z-index: 1;
         }
 
         .service-card p {
-            color: #888;
-            line-height: 1.6;
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05em;
+            position: relative;
+            z-index: 1;
         }
 
         /* Contact Section */
         .contact {
-            background-color: #0a0a0a;
+            background-color: var(--bg-dark);
+            padding: 100px 20px;
         }
 
         .contact-info {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
             text-align: center;
         }
 
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .contact-grid.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .contact-item {
-            margin: 20px 0;
-            font-size: 1.1em;
-            color: #b0b0b0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
+            padding: 35px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(2, 0, 255, 0.4);
+            box-shadow: 0 15px 40px rgba(2, 0, 255, 0.2);
         }
 
         .contact-item strong {
             color: #ffffff;
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 12px;
         }
 
         .contact-item a {
-            color: #4682ff;
+            color: var(--primary-blue);
             text-decoration: none;
-            transition: color 0.3s ease;
+            font-size: 1.1em;
+            transition: color 0.3s;
         }
 
         .contact-item a:hover {
-            color: #6aa0ff;
+            color: #4682ff;
+        }
+
+        .contact-message {
+            margin-top: 50px;
+            font-size: 1.2em;
+            color: var(--text-muted);
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .contact-message.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Footer */
         .footer {
-            background-color: #0a0a0a;
-            color: #888;
-            text-align: center;
-            padding: 30px 20px;
+            background-color: var(--bg-dark);
+            padding: 60px 20px 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .footer p {
-            margin: 5px 0;
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
         }
 
-        /* Responsive Design */
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 1.05em;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-copyright {
+            color: #666;
+            margin-top: 20px;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0150FF 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(2, 0, 255, 0.4);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(2, 0, 255, 0.6);
+        }
+
+        .scroll-top::before {
+            content: '↑';
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-icon {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(2, 0, 255, 0.2);
+            border-top-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
+            nav .container {
+                flex-direction: column;
+                gap: 20px;
             }
 
-            .header p {
-                font-size: 1.1em;
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
             }
 
-            .section h2 {
-                font-size: 2em;
+            .hero {
+                padding: 120px 20px 80px;
             }
 
-            .services-grid {
-                grid-template-columns: 1fr;
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero .tagline {
+                font-size: 1.2em;
+            }
+
+            .section-title {
+                font-size: 2.2em;
             }
 
             .app-header {
                 flex-direction: column;
             }
 
-            .app-title {
-                text-align: center;
-            }
-
             .app-title h3 {
-                font-size: 2em;
+                font-size: 2.2em;
             }
 
             .screenshots {
                 grid-template-columns: 1fr;
             }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <h1>BCDPRODUCTION LLC</h1>
-        <p>Professional App Development and Smart Solution Services</p>
-    </header>
+    <!-- Loading Screen -->
+    <div class="loader">
+        <div class="loader-icon"></div>
+    </div>
 
-    <section class="section about">
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Navigation -->
+    <nav>
         <div class="container">
-            <h2>About Us</h2>
+            <div class="logo">
+                <img src="BCD_design_logo_black.png" alt="BCD Production">
+                <span>BCDPRODUCTION</span>
+            </div>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>BCDPRODUCTION LLC</h1>
+            <p class="tagline">Professional App Development and Smart Solution Services</p>
+            <a href="#contact" class="cta-button">Get In Touch</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
             <div class="about-content">
-                <p>BCDPRODUCTION LLC is a professional software development company dedicated to delivering high-quality applications and innovative solutions. We specialize in creating exceptional monitoring and optimization tools for modern technology infrastructure.</p>
+                <p>BCDPRODUCTION LLC is a professional software development company dedicated to delivering high-quality applications and innovative solutions. We specialize in creating exceptional monitoring and optimization tools for modern technology infrastructure, with expertise in iOS development, industrial automation, and server management solutions.</p>
             </div>
         </div>
     </section>
 
-    <section class="featured-app">
+    <!-- Featured App Section -->
+    <section class="featured-app" id="portfolio">
         <div class="container">
+            <h2 class="section-title">Featured Project</h2>
             <div class="app-showcase">
                 <div class="app-header">
                     <img src="Fleet_GPU_modern_2.png" alt="Fleet GPU App Icon" class="app-icon">
                     <div class="app-title">
                         <h3>Fleet GPU</h3>
-                        <p>Monitor Your GPU</p>
+                        <p>GPU Monitoring Solution</p>
                     </div>
                 </div>
                 
                 <p class="app-description">
-                    Fleet GPU is an advanced iOS application designed for monitoring and managing Vast.AI GPU instances. Track real-time performance metrics, GPU temperature, network speeds, and pricing information directly from your iPhone or iPad.
+                    Fleet GPU is an advanced iOS application designed for monitoring and managing Vast.AI GPU instances. Track real-time performance metrics, GPU temperature, network speeds, and pricing information directly from your iPhone or iPad. Built with SwiftUI and featuring comprehensive monitoring capabilities.
                 </p>
 
                 <div class="app-badges">
@@ -332,66 +848,215 @@
                     <span class="badge">Real-Time Monitoring</span>
                     <span class="badge">Widget Support</span>
                     <span class="badge">Push Notifications</span>
+                    <span class="badge">SwiftUI</span>
                 </div>
 
                 <div class="screenshots">
                     <div class="screenshot-card">
-                        <img src="fleet-gpu-screenshot-1.png" alt="Fleet GPU Main Interface">
-                        <h4>Detailed Monitoring</h4>
-                        <p>View comprehensive GPU stats including temperature, performance, network speeds, and pricing in real-time.</p>
+                        <img src="fleet-gpu-screenshot-1.png" alt="Fleet GPU Dashboard">
+                        <h4>Comprehensive Dashboard</h4>
+                        <p>Monitor all your GPU machines with detailed performance metrics, temperature readings, network speeds, and real-time status updates in a clean interface.</p>
                     </div>
                     <div class="screenshot-card">
                         <img src="fleet-gpu-screenshot-2.png" alt="Fleet GPU Widget">
                         <h4>Home Screen Widgets</h4>
-                        <p>Stay updated with at-a-glance information right on your home screen with beautiful, customizable widgets.</p>
+                        <p>Stay updated with at-a-glance information right on your home screen with beautiful, customizable widgets that display key metrics.</p>
+                    </div>
+                    <div class="screenshot-card">
+                        <img src="fleet-gpu-screenshot-3.png" alt="Fleet GPU Statistics">
+                        <h4>Detailed Analytics</h4>
+                        <p>Track runtime statistics, rental counts, and performance metrics with comprehensive analytics and historical data visualization.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section services">
+    <!-- Services Section -->
+    <section class="services" id="services">
         <div class="container">
-            <h2>Our Services</h2>
+            <h2 class="section-title">Our Services</h2>
             <div class="services-grid">
                 <div class="service-card">
+                    <div class="service-icon">📱</div>
                     <h3>iOS App Development</h3>
-                    <p>Custom iOS applications built with SwiftUI, delivering seamless user experiences with modern design and powerful functionality.</p>
+                    <p>Custom iOS applications built with SwiftUI and Swift, delivering seamless user experiences with modern design patterns, powerful functionality, and App Store optimization.</p>
                 </div>
                 <div class="service-card">
+                    <div class="service-icon">🖥️</div>
                     <h3>Monitoring Solutions</h3>
-                    <p>Real-time monitoring and analytics platforms for infrastructure, servers, and cloud resources with intuitive dashboards.</p>
+                    <p>Real-time monitoring and analytics platforms for infrastructure, servers, and cloud resources with intuitive dashboards, alerting systems, and comprehensive metrics tracking.</p>
                 </div>
                 <div class="service-card">
+                    <div class="service-icon">🔗</div>
                     <h3>API Integration</h3>
-                    <p>Expert integration services connecting your applications with third-party APIs and services for enhanced functionality.</p>
+                    <p>Expert integration services connecting your applications with third-party APIs and services for enhanced functionality, data synchronization, and workflow automation.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Industrial Automation</h3>
+                    <p>PLC programming, HMI development, motion control, and manufacturing system integration.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Server Infrastructure</h3>
+                    <p>Server administration, monitoring stack implementation with Prometheus and Grafana, infrastructure optimization, and comprehensive system management solutions.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💡</div>
+                    <h3>Custom Solutions</h3>
+                    <p>Tailored software solutions designed to meet your specific business needs, from embedded systems to cloud-based applications and everything in between.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section contact">
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
         <div class="container">
-            <h2>Contact Us</h2>
+            <h2 class="section-title">Contact Us</h2>
             <div class="contact-info">
-                <div class="contact-item">
-                    <strong>Website:</strong> <a href="https://www.bcdproduction.com">www.bcdproduction.com</a>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <strong>Website</strong>
+                        <a href="https://www.bcdproduction.com">www.bcdproduction.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Email</strong>
+                        <a href="mailto:dmitriy@bcdproduction.com">dmitriy@bcdproduction.com</a>
+                    </div>
                 </div>
-                <div class="contact-item">
-                    <strong>Email:</strong> <a href="mailto:dmitriy@bcdproduction.com">dmitriy@bcdproduction.com</a>
-                </div>
-                <div class="contact-item">
-                    <p>We'd love to hear from you and discuss how we can help bring your project to life.</p>
-                </div>
+                <p class="contact-message">
+                    We'd love to hear from you and discuss how we can help bring your project to life. Whether you need iOS development, monitoring solutions, or custom software development, we're here to help.
+                </p>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 BCDPRODUCTION LLC. All rights reserved.</p>
-            <p>Professional App Development and Smart Solution Services</p>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2026 BCDPRODUCTION LLC. All rights reserved.</p>
+                <p>Professional App Development and Smart Solution Services</p>
+            </div>
         </div>
     </footer>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop"></div>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 500);
+        });
+
+        // Create floating particles
+        function createParticles() {
+            const particleCount = 15;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                document.querySelector('.animated-bg').appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.section-title, .about-content, .service-card, .screenshot-card, .app-header, .app-description, .app-badges, .contact-grid, .contact-message').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                hero.style.opacity = 1 - scrolled / 600;
+            }
+        });
+
+        // Mouse move effect for service cards
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    </script>
 </body>
 </html>
