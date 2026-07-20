@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="BCDPRODUCTION - Professional software development and monitoring solutions. Creator of Fleet GPU for Vast.AI monitoring.">
     <meta name="keywords" content="BCDPRODUCTION, iOS development, monitoring solutions, Fleet GPU, software development">
-    <title>BCDPRODUCTION LLC - Professional App Development</title>
+    <title>BCDPRODUCTION - Professional App Development</title>
     <link rel="icon" type="image/png" href="BCD_design_logo_black.png">
     <style>
         * {
@@ -73,20 +73,10 @@
         }
 
         @keyframes float {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
         }
 
         /* Navigation */
@@ -133,7 +123,8 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 35px;
+            gap: 30px;
+            align-items: center;
         }
 
         nav a {
@@ -146,6 +137,20 @@
 
         nav a:hover {
             color: var(--primary-blue);
+        }
+
+        nav a.nav-cta {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0150FF 100%);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+
+        nav a.nav-cta:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(2, 0, 255, 0.4);
         }
 
         /* Hero Section */
@@ -189,14 +194,17 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.7s;
         }
 
         .cta-button {
@@ -211,8 +219,11 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            animation: fadeInUp 1s forwards 0.7s;
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid rgba(2, 0, 255, 0.5);
         }
 
         .cta-button::before {
@@ -534,9 +545,76 @@
             z-index: 1;
         }
 
+        /* Divisions / cross-link banner */
+        .divisions {
+            background-color: var(--bg-dark);
+            padding: 100px 20px;
+        }
+
+        .division-banner {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #12122a 0%, #0d0d1f 100%);
+            border: 1px solid rgba(2, 0, 255, 0.3);
+            border-radius: 24px;
+            padding: 60px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .division-banner.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .division-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(2, 0, 255, 0.15) 0%, transparent 70%);
+            animation: pulse 5s ease-in-out infinite;
+        }
+
+        .division-banner .division-icon {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .division-banner h3 {
+            font-size: 2.2em;
+            color: #fff;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .division-banner p {
+            color: var(--text-muted);
+            font-size: 1.2em;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .division-banner .cta-button {
+            position: relative;
+            z-index: 1;
+        }
+
         /* Contact Section */
         .contact {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-card);
             padding: 100px 20px;
         }
 
@@ -626,6 +704,7 @@
             justify-content: center;
             gap: 40px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
@@ -740,7 +819,7 @@
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 20px;
+                gap: 18px;
             }
 
             .hero {
@@ -775,6 +854,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .division-banner {
+                padding: 45px 25px;
+            }
+
             .footer-links {
                 flex-direction: column;
                 gap: 20px;
@@ -803,6 +886,7 @@
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="medical.html" class="nav-cta">Medical &amp; Wellness</a></li>
             </ul>
         </div>
     </nav>
@@ -812,7 +896,10 @@
         <div class="hero-content">
             <h1>BCDPRODUCTION</h1>
             <p class="tagline">Professional App Development and Smart Solution Services</p>
-            <a href="#contact" class="cta-button">Get In Touch</a>
+            <div class="hero-buttons">
+                <a href="#services" class="cta-button">Our Services</a>
+                <a href="medical.html" class="cta-button secondary">Medical &amp; Wellness &rarr;</a>
+            </div>
         </div>
     </section>
 
@@ -838,7 +925,7 @@
                         <p>GPU Monitoring Solution</p>
                     </div>
                 </div>
-                
+
                 <p class="app-description">
                     Fleet GPU is an advanced iOS application designed for monitoring and managing Vast.AI GPU instances. Track real-time performance metrics, GPU temperature, network speeds, and pricing information directly from your iPhone or iPad. Built with SwiftUI and featuring comprehensive monitoring capabilities.
                 </p>
@@ -911,6 +998,18 @@
         </div>
     </section>
 
+    <!-- Divisions / Cross-link Banner -->
+    <section class="divisions">
+        <div class="container">
+            <div class="division-banner">
+                <div class="division-icon">🏥</div>
+                <h3>Medical &amp; Wellness Equipment Services</h3>
+                <p>A dedicated division serving medical offices and wellness centers with equipment repairs, electrical safety testing, preventive maintenance, and compliance documentation. Keep your practice running safely and inspection-ready.</p>
+                <a href="medical.html" class="cta-button">Explore Medical &amp; Wellness Services &rarr;</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
@@ -940,6 +1039,7 @@
                 <a href="#about">About</a>
                 <a href="#portfolio">Portfolio</a>
                 <a href="#services">Services</a>
+                <a href="medical.html">Medical &amp; Wellness</a>
                 <a href="#contact">Contact</a>
             </div>
             <div class="footer-copyright">
@@ -953,14 +1053,12 @@
     <div class="scroll-top" id="scrollTop"></div>
 
     <script>
-        // Loader
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.querySelector('.loader').classList.add('hidden');
             }, 500);
         });
 
-        // Create floating particles
         function createParticles() {
             const particleCount = 15;
             for (let i = 0; i < particleCount; i++) {
@@ -974,60 +1072,36 @@
         }
         createParticles();
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 100);
+                    setTimeout(() => { entry.target.classList.add('visible'); }, index * 100);
                 }
             });
         }, observerOptions);
 
-        // Observe all animated elements
-        document.querySelectorAll('.section-title, .about-content, .service-card, .screenshot-card, .app-header, .app-description, .app-badges, .contact-grid, .contact-message').forEach(el => {
+        document.querySelectorAll('.section-title, .about-content, .service-card, .screenshot-card, .app-header, .app-description, .app-badges, .contact-grid, .contact-message, .division-banner').forEach(el => {
             observer.observe(el);
         });
 
-        // Scroll to top button
         const scrollTopBtn = document.getElementById('scrollTop');
-        
         window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
+            if (window.pageYOffset > 300) { scrollTopBtn.classList.add('visible'); }
+            else { scrollTopBtn.classList.remove('visible'); }
         });
-
         scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
             });
         });
 
-        // Parallax effect for hero section
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const hero = document.querySelector('.hero-content');
@@ -1037,25 +1111,18 @@
             }
         });
 
-        // Mouse move effect for service cards
         document.querySelectorAll('.service-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                
                 const rotateX = (y - centerY) / 20;
                 const rotateY = (centerX - x) / 20;
-                
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
             });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = '';
-            });
+            card.addEventListener('mouseleave', () => { card.style.transform = ''; });
         });
     </script>
 </body>
