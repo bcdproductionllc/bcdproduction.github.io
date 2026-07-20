@@ -903,14 +903,14 @@
             <div class="contact-methods">
                 <div class="contact-chip">
                     <strong>Email</strong>
-                    <a href="mailto:dmitriy@bcdproduction.com">dmitriy@bcdproduction.com</a>
+                    <a id="emailLink" href="#">Loading…</a>
                 </div>
                 <div class="contact-chip">
                     <strong>Website</strong>
                     <a href="https://www.bcdproduction.com">www.bcdproduction.com</a>
                 </div>
             </div>
-            <a href="mailto:dmitriy@bcdproduction.com?subject=Medical%20%26%20Wellness%20Equipment%20Service" class="cta-button plain">Request Service</a>
+            <a id="requestBtn" href="#" class="cta-button plain">Request Service</a>
             <p class="service-area"><strong>Service Area:</strong> Greater Cincinnati &amp; Dayton region</p>
         </div>
     </section>
@@ -994,6 +994,25 @@
             });
             card.addEventListener('mouseleave', () => { card.style.transform = ''; });
         });
+
+        // Email obfuscation — address is assembled in the browser so it is not
+        // present in the raw HTML source that scraper bots read.
+        (function () {
+            const user = 'dmitriy';
+            const domain = ['bcdproduction', 'com'].join('.');
+            const addr = user + '\u0040' + domain;
+            const subject = 'Medical & Wellness Equipment Service';
+
+            const emailLink = document.getElementById('emailLink');
+            if (emailLink) {
+                emailLink.textContent = addr;
+                emailLink.setAttribute('href', 'mailto:' + addr);
+            }
+            const requestBtn = document.getElementById('requestBtn');
+            if (requestBtn) {
+                requestBtn.setAttribute('href', 'mailto:' + addr + '?subject=' + encodeURIComponent(subject));
+            }
+        })();
     </script>
 </body>
 </html>
