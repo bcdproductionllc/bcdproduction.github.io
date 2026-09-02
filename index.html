@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BCDPRODUCTION — independent iOS app development studio. Creators of Fleet GPU and INQORA. Privacy-first native apps built with SwiftUI.">
+    <meta name="keywords" content="BCDPRODUCTION, iOS development, SwiftUI, Fleet GPU, INQORA, invoice app, GPU monitoring, app studio">
+    <meta property="og:title" content="BCDPRODUCTION — iOS App Development Studio">
+    <meta property="og:description" content="Privacy-first iOS apps built with SwiftUI. Creators of Fleet GPU and INQORA.">
+    <meta property="og:type" content="website">
+    <title>BCDPRODUCTION — iOS App Development Studio</title>
+    <link rel="icon" type="image/png" href="BCD_design_logo_black.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-blue: #0200FF;
+            --accent-cyan: #00D4FF;
+            --bg-dark: #0a0a0a;
+            --bg-card: #0f0f0f;
+            --text-light: #e0e0e0;
+            --text-muted: #b0b0b0;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            background-color: var(--bg-dark);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(2, 0, 255, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .particle {
+            position: fixed;
+            width: 3px; height: 3px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(-100%);
+            animation: slideDown 0.5s forwards;
+        }
+
+        @keyframes slideDown { to { transform: translateY(0); } }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        nav .logo img { width: 45px; height: 45px; }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            font-size: 1.05em;
+        }
+
+        nav a:hover { color: var(--primary-blue); }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 170px 20px 110px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .eyebrow {
+            display: inline-block;
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 212, 255, 0.35);
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.2s;
+        }
+
+        .hero h1 {
+            font-size: 4.2em;
+            margin-bottom: 25px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0200FF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.35s;
+            line-height: 1.1;
+        }
+
+        .hero .tagline {
+            font-size: 1.55em;
+            color: var(--text-muted);
+            margin-bottom: 45px;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.5s;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.65s;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0150FF 100%);
+            color: white;
+            padding: 17px 42px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before { width: 400px; height: 400px; }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(2, 0, 255, 0.45);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .section-title {
+            font-size: 2.9em;
+            text-align: center;
+            margin-bottom: 18px;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.18em;
+            max-width: 720px;
+            margin: 0 auto 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .section-title.visible, .section-subtitle.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stats strip */
+        .stats {
+            background-color: var(--bg-card);
+            padding: 60px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .stats-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s;
+        }
+
+        .stat-item.visible { opacity: 1; transform: translateY(0); }
+
+        .stat-number {
+            font-size: 2.8em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0200FF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 1.02em;
+            margin-top: 6px;
+        }
+
+        /* About */
+        .about { padding: 100px 20px; background-color: var(--bg-dark); }
+
+        .about-content {
+            max-width: 880px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.25em;
+            line-height: 1.9;
+            color: var(--text-muted);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .about-content.visible { opacity: 1; transform: translateY(0); }
+
+        /* Portfolio */
+        .portfolio {
+            background-color: var(--bg-card);
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio::before {
+            content: '';
+            position: absolute;
+            top: 30%; left: 50%;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(2, 0, 255, 0.07) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulse 5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .project {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 70px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s;
+        }
+
+        .project.visible { opacity: 1; transform: translateY(0); }
+
+        .project:last-child { margin-bottom: 0; }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .project-icon {
+            width: 110px;
+            height: 110px;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .project-icon:hover { transform: scale(1.05) rotate(-2deg); }
+
+        .project-title h3 {
+            font-size: 2.6em;
+            color: #ffffff;
+            margin-bottom: 4px;
+            line-height: 1.15;
+        }
+
+        .project-title .subtitle {
+            font-size: 1.2em;
+            color: var(--accent-cyan);
+        }
+
+        .project-status {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.35);
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+
+        .project-description {
+            font-size: 1.18em;
+            color: var(--text-muted);
+            line-height: 1.9;
+            margin-bottom: 28px;
+            max-width: 900px;
+        }
+
+        .project-badges {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
+            padding: 10px 22px;
+            border-radius: 25px;
+            font-size: 0.95em;
+            color: var(--primary-blue);
+            border: 1px solid rgba(2, 0, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(2, 0, 255, 0.3);
+            border-color: rgba(2, 0, 255, 0.6);
+        }
+
+        .appstore-link {
+            display: inline-block;
+            background: #ffffff;
+            color: #000000;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.02em;
+            transition: all 0.3s;
+            margin-bottom: 40px;
+        }
+
+        .appstore-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .shots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        .shot-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .shot-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(2, 0, 255, 0.4);
+            box-shadow: 0 20px 60px rgba(2, 0, 255, 0.28);
+        }
+
+        .shot-card img {
+            width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+            display: block;
+        }
+
+        .shot-card:hover img { transform: scale(1.03); }
+
+        .shot-card h4 {
+            color: #ffffff;
+            margin-top: 20px;
+            font-size: 1.25em;
+        }
+
+        .shot-card p {
+            color: #888;
+            font-size: 0.98em;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .project-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            margin: 0 0 70px;
+        }
+
+        /* Capabilities */
+        .capabilities { background-color: var(--bg-dark); padding: 100px 20px; }
+
+        .cap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .cap-card {
+            background: linear-gradient(135deg, #161616 0%, #121212 100%);
+            padding: 40px 34px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .cap-card.visible { opacity: 1; transform: translateY(0); }
+
+        .cap-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(2, 0, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .cap-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(2, 0, 255, 0.5);
+            box-shadow: 0 20px 60px rgba(2, 0, 255, 0.28);
+        }
+
+        .cap-card:hover::before { opacity: 1; }
+
+        .cap-icon {
+            font-size: 2.8em;
+            margin-bottom: 18px;
+            display: inline-block;
+            transition: transform 0.4s;
+        }
+
+        .cap-card:hover .cap-icon { transform: scale(1.2) rotate(5deg); }
+
+        .cap-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 16px;
+            font-size: 1.45em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cap-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.02em;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Approach */
+        .approach { background-color: var(--bg-card); padding: 100px 20px; }
+
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+        }
+
+        .approach-item {
+            text-align: center;
+            padding: 30px 22px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .approach-item.visible { opacity: 1; transform: translateY(0); }
+
+        .approach-num {
+            width: 64px; height: 64px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0150FF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(2, 0, 255, 0.35);
+        }
+
+        .approach-item h4 { color: #fff; font-size: 1.2em; margin-bottom: 10px; }
+        .approach-item p { color: var(--text-muted); line-height: 1.7; }
+
+        /* Contact */
+        .contact {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .contact-inner { max-width: 780px; margin: 0 auto; }
+
+        .contact h2 {
+            font-size: 2.6em;
+            color: #fff;
+            margin-bottom: 18px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .contact h2.visible { opacity: 1; transform: translateY(0); }
+
+        .contact-lead {
+            color: var(--text-muted);
+            font-size: 1.18em;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .contact-chip {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(2, 0, 255, 0.35);
+            border-radius: 14px;
+            padding: 24px 32px;
+            min-width: 250px;
+            transition: all 0.3s;
+        }
+
+        .contact-chip:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-cyan);
+        }
+
+        .contact-chip strong {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 1.08em;
+        }
+
+        .contact-chip a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 1.03em;
+            cursor: pointer;
+        }
+
+        .contact-chip a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .footer {
+            background-color: var(--bg-dark);
+            padding: 60px 20px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-content { max-width: 1200px; margin: 0 auto; text-align: center; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 1.02em;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0;
+            width: 0; height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--primary-blue); }
+        .footer-links a:hover::after { width: 100%; }
+
+        .footer-copyright { color: #666; margin-top: 20px; }
+
+        /* Scroll top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0150FF 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(2, 0, 255, 0.4);
+        }
+
+        .scroll-top.visible { opacity: 1; transform: translateY(0); }
+        .scroll-top:hover { transform: translateY(-5px); }
+
+        .scroll-top::before {
+            content: '↑';
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Loader */
+        .loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden { opacity: 0; visibility: hidden; }
+
+        .loader-icon {
+            width: 60px; height: 60px;
+            border: 4px solid rgba(2, 0, 255, 0.2);
+            border-top-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            nav .container { flex-direction: column; gap: 18px; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 18px; }
+            .hero { padding: 140px 20px 80px; }
+            .hero h1 { font-size: 2.5em; }
+            .hero .tagline { font-size: 1.15em; }
+            .section-title { font-size: 2.1em; }
+            .project-header { flex-direction: column; text-align: center; }
+            .project-title h3 { font-size: 2em; }
+            .project-badges { justify-content: center; }
+            .project-description { text-align: center; }
+            .shots, .cap-grid, .approach-grid { grid-template-columns: 1fr; }
+            .footer-links { flex-direction: column; gap: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader"><div class="loader-icon"></div></div>
+    <div class="animated-bg"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <img src="BCD_design_logo_black.png" alt="BCDPRODUCTION">
+                <span>BCDPRODUCTION</span>
+            </div>
+            <ul>
+                <li><a href="#work">Our Apps</a></li>
+                <li><a href="#capabilities">Capabilities</a></li>
+                <li><a href="#approach">Approach</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="eyebrow">iOS App Development Studio</span>
+            <h1>We Build Apps People<br>Actually Trust</h1>
+            <p class="tagline">An independent studio crafting fast, private, native iOS apps with SwiftUI — shipped to the App Store and built to last.</p>
+            <div class="hero-buttons">
+                <a href="#work" class="cta-button">See Our Apps</a>
+                <a href="#contact" class="cta-button secondary">Start a Project</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number">2</span>
+                <span class="stat-label">Apps on the App Store</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Native SwiftUI</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">0</span>
+                <span class="stat-label">Trackers or Analytics</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">15+</span>
+                <span class="stat-label">Years Engineering</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about">
+        <div class="container">
+            <h2 class="section-title">Who We Are</h2>
+            <div class="about-content">
+                <p>BCDPRODUCTION is an independent software studio building native iOS applications with a bias toward speed, privacy, and things that simply work. Backed by over fifteen years of electrical and controls engineering, we approach software the way we approach hardware — reliability first, no unnecessary moving parts, and no data leaving your device unless it truly has to.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="portfolio" id="work">
+        <div class="container">
+            <h2 class="section-title">Our Apps</h2>
+            <p class="section-subtitle">Shipped products, live on the App Store — designed, built, and maintained in-house.</p>
+
+            <!-- INQORA -->
+            <div class="project">
+                <div class="project-header">
+                    <img src="inqora_icon.png" alt="INQORA app icon" class="project-icon">
+                    <div class="project-title">
+                        <h3>INQORA</h3>
+                        <div class="subtitle">Easy Invoice &amp; PDF</div>
+                        <span class="project-status">● Live on the App Store</span>
+                    </div>
+                </div>
+
+                <p class="project-description">
+                    A private, offline invoice maker for people who just want to get paid. Pick a client, tap in line items, preview the PDF, and share it — no account, no cloud, no sign-up. INQORA keeps everything in a local database on the device and collects zero data, so it works on a plane, at a job site, or anywhere with no signal at all.
+                </p>
+
+                <div class="project-badges">
+                    <span class="badge">SwiftUI</span>
+                    <span class="badge">Fully Offline</span>
+                    <span class="badge">PDF Generation</span>
+                    <span class="badge">8 Templates</span>
+                    <span class="badge">Face ID Lock</span>
+                    <span class="badge">Zero Data Collection</span>
+                </div>
+
+                <a href="https://apps.apple.com/us/app/inqora-easy-invoice-pdf/id6800053500" class="appstore-link" target="_blank" rel="noopener">Download on the App Store</a>
+
+                <div class="shots">
+                    <div class="shot-card">
+                        <img src="inqora-screenshot-1.png" alt="INQORA dashboard" loading="lazy">
+                        <h4>Business at a Glance</h4>
+                        <p>Collected, outstanding, and overdue totals with a six-month revenue chart and live invoice status tracking.</p>
+                    </div>
+                    <div class="shot-card">
+                        <img src="inqora-screenshot-2.png" alt="INQORA invoice PDF" loading="lazy">
+                        <h4>Professional PDFs</h4>
+                        <p>Clean, client-ready invoices with your logo and colors, automatic subtotals, discounts, and tax — shared in a tap.</p>
+                    </div>
+                    <div class="shot-card">
+                        <img src="inqora-screenshot-3.png" alt="INQORA privacy features" loading="lazy">
+                        <h4>Private by Design</h4>
+                        <p>No account, no trackers, no server. Everything lives on the device and can be locked behind Face ID.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="project-divider">
+
+            <!-- Fleet GPU -->
+            <div class="project">
+                <div class="project-header">
+                    <img src="Fleet_GPU_modern_2.png" alt="Fleet GPU app icon" class="project-icon">
+                    <div class="project-title">
+                        <h3>Fleet GPU</h3>
+                        <div class="subtitle">Real-Time GPU Monitoring</div>
+                        <span class="project-status">● Live on the App Store</span>
+                    </div>
+                </div>
+
+                <p class="project-description">
+                    A monitoring companion for operators renting out GPU hardware on Vast.AI. Fleet GPU tracks temperature, performance, network throughput, reliability, and pricing across an entire fleet in real time — with push alerts for start and stop events, custom temperature thresholds, and home screen widgets that keep the numbers one glance away.
+                </p>
+
+                <div class="project-badges">
+                    <span class="badge">SwiftUI</span>
+                    <span class="badge">Real-Time Monitoring</span>
+                    <span class="badge">WidgetKit</span>
+                    <span class="badge">Push Notifications</span>
+                    <span class="badge">Keychain Security</span>
+                    <span class="badge">REST API</span>
+                </div>
+
+                <a href="https://apps.apple.com/us/app/fleet-gpu/id6757491474" class="appstore-link" target="_blank" rel="noopener">Download on the App Store</a>
+
+                <div class="shots">
+                    <div class="shot-card">
+                        <img src="fleet-gpu-screenshot-1.png" alt="Fleet GPU dashboard" loading="lazy">
+                        <h4>Fleet Dashboard</h4>
+                        <p>Every machine in one view — temperature, TFLOPS, CPU, RAM, disk, network speeds, price, and reliability.</p>
+                    </div>
+                    <div class="shot-card">
+                        <img src="fleet-gpu-screenshot-2.png" alt="Fleet GPU widget" loading="lazy">
+                        <h4>Home Screen Widgets</h4>
+                        <p>Key metrics surfaced right on the home screen, refreshed in the background without opening the app.</p>
+                    </div>
+                    <div class="shot-card">
+                        <img src="fleet-gpu-screenshot-3.png" alt="Fleet GPU statistics" loading="lazy">
+                        <h4>Runtime Statistics</h4>
+                        <p>Monthly uptime breakdowns, rental counts, and per-machine running versus stopped time distribution.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities -->
+    <section class="capabilities" id="capabilities">
+        <div class="container">
+            <h2 class="section-title">What We Do</h2>
+            <p class="section-subtitle">From a first sketch to a shipped App Store listing — and everything that keeps it running afterward.</p>
+            <div class="cap-grid">
+                <div class="cap-card">
+                    <div class="cap-icon">📱</div>
+                    <h3>Native iOS Development</h3>
+                    <p>Swift and SwiftUI applications for iPhone and iPad, with modern architecture, smooth performance, and interfaces that feel at home on the platform.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon">🚀</div>
+                    <h3>App Store Delivery</h3>
+                    <p>End-to-end release management — provisioning, StoreKit and in-app purchases, review submission, and the update cadence that follows launch.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon">🔒</div>
+                    <h3>Privacy-First Architecture</h3>
+                    <p>Local-first data models, Keychain credential storage, and Face ID gating. We build apps that collect nothing and still do everything they promise.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon">📊</div>
+                    <h3>Monitoring &amp; Dashboards</h3>
+                    <p>Real-time telemetry interfaces for infrastructure and hardware, with alerting, background refresh, and metrics that stay readable under load.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon">🔗</div>
+                    <h3>API &amp; Backend Integration</h3>
+                    <p>Reliable connections to third-party REST APIs, push notification services, and custom backends — with sane error handling and offline behavior.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon">⚙️</div>
+                    <h3>Industrial &amp; Embedded</h3>
+                    <p>PLC programming, HMI development, motion control, and manufacturing system integration, informed by fifteen-plus years of controls engineering.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approach -->
+    <section class="approach" id="approach">
+        <div class="container">
+            <h2 class="section-title">How We Work</h2>
+            <p class="section-subtitle">A short path from idea to something real in your hands.</p>
+            <div class="approach-grid">
+                <div class="approach-item">
+                    <div class="approach-num">1</div>
+                    <h4>Scope</h4>
+                    <p>We work out what the app actually needs to do — and, just as importantly, what it doesn't.</p>
+                </div>
+                <div class="approach-item">
+                    <div class="approach-num">2</div>
+                    <h4>Design</h4>
+                    <p>Interface and data model shaped together, so the app feels obvious before a single feature is finished.</p>
+                </div>
+                <div class="approach-item">
+                    <div class="approach-num">3</div>
+                    <h4>Build</h4>
+                    <p>Native development in short cycles, with working builds you can hold and react to along the way.</p>
+                </div>
+                <div class="approach-item">
+                    <div class="approach-num">4</div>
+                    <h4>Ship &amp; Support</h4>
+                    <p>Submission, launch, and the ongoing updates that keep it healthy as iOS moves forward.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="contact-inner">
+            <h2>Have an App in Mind?</h2>
+            <p class="contact-lead">Tell us what you're trying to build. Whether it's a focused utility, a monitoring tool, or something nobody's made yet, we'd like to hear about it.</p>
+            <div class="contact-methods">
+                <div class="contact-chip">
+                    <strong>Email</strong>
+                    <a id="emailLink" href="#" rel="nofollow">Email Us &rarr;</a>
+                </div>
+                <div class="contact-chip">
+                    <strong>App Store</strong>
+                    <a href="https://apps.apple.com/us/developer/bcdproduction-llc/id1867250803" target="_blank" rel="noopener">All our apps</a>
+                </div>
+            </div>
+            <a id="startProjectBtn" href="#" class="cta-button">Start a Project</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#work">Our Apps</a>
+                <a href="#capabilities">Capabilities</a>
+                <a href="#approach">Approach</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2026 BCDPRODUCTION. All rights reserved.</p>
+                <p>iOS App Development Studio</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="scroll-top" id="scrollTop"></div>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => { document.querySelector('.loader').classList.add('hidden'); }, 500);
+        });
+
+        function createParticles() {
+            for (let i = 0; i < 15; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                document.querySelector('.animated-bg').appendChild(p);
+            }
+        }
+        createParticles();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => { entry.target.classList.add('visible'); }, index * 80);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.section-title, .section-subtitle, .about-content, .project, .cap-card, .approach-item, .stat-item, .contact h2').forEach(el => observer.observe(el));
+
+        // The address is never rendered as text and never appears in the page source.
+        // It is decoded only at click time, so crawlers find nothing to harvest.
+        (function () {
+            const p = ['ZG1pdHJpeQ==', 'YmNkcHJvZHVjdGlvbg==', 'Y29t'];
+
+            function addr() {
+                return atob(p[0]) + String.fromCharCode(64) + atob(p[1]) + '.' + atob(p[2]);
+            }
+
+            function wire(el, subject) {
+                if (!el) return;
+                el.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = 'mailto:' + addr() + (subject ? '?subject=' + encodeURIComponent(subject) : '');
+                    window.location.href = href;
+                });
+            }
+
+            wire(document.getElementById('emailLink'), 'Project inquiry');
+            wire(document.getElementById('startProjectBtn'), 'New project inquiry');
+        })();
+
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('visible', window.pageYOffset > 300);
+        });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.4}px)`;
+                hero.style.opacity = Math.max(0, 1 - scrolled / 600);
+            }
+        });
+
+        document.querySelectorAll('.cap-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const r = card.getBoundingClientRect();
+                const rotateX = (e.clientY - r.top - r.height / 2) / 20;
+                const rotateY = (r.width / 2 - (e.clientX - r.left)) / 20;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+            });
+            card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+        });
+    </script>
+</body>
+</html>
