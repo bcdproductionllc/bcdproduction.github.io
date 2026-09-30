@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BCDPRODUCTION — independent iOS app development studio. Creators of Fleet GPU and INQORA. Privacy-first native apps built with SwiftUI.">
-    <meta name="keywords" content="BCDPRODUCTION, iOS development, SwiftUI, Fleet GPU, INQORA, invoice app, GPU monitoring, app studio">
+    <meta name="description" content="BCDPRODUCTION — independent iOS app development studio. Creators of Swapfox, PLC IO Checkout, INQORA, and Fleet GPU. Privacy-first native apps built with SwiftUI.">
+    <meta name="keywords" content="BCDPRODUCTION, iOS development, SwiftUI, Swapfox, PLC IO Checkout, INQORA, Fleet GPU, currency converter, commissioning app, invoice app, GPU monitoring, app studio">
     <meta property="og:title" content="BCDPRODUCTION — iOS App Development Studio">
-    <meta property="og:description" content="Privacy-first iOS apps built with SwiftUI. Creators of Fleet GPU and INQORA.">
+    <meta property="og:description" content="Privacy-first iOS apps built with SwiftUI. Four shipped apps on the App Store.">
     <meta property="og:type" content="website">
     <title>BCDPRODUCTION — iOS App Development Studio</title>
     <link rel="icon" type="image/png" href="BCD_design_logo_black.png">
@@ -248,7 +248,7 @@
             color: var(--text-muted);
             font-size: 1.18em;
             max-width: 720px;
-            margin: 0 auto 60px;
+            margin: 0 auto 45px;
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.8s;
@@ -327,7 +327,7 @@
         .portfolio::before {
             content: '';
             position: absolute;
-            top: 30%; left: 50%;
+            top: 20%; left: 50%;
             width: 700px; height: 700px;
             background: radial-gradient(circle, rgba(2, 0, 255, 0.07) 0%, transparent 70%);
             transform: translate(-50%, -50%);
@@ -339,10 +339,54 @@
             50% { transform: translate(-50%, -50%) scale(1.2); }
         }
 
+        /* App quick-jump index */
+        .app-index {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 70px;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s;
+        }
+
+        .app-index.visible { opacity: 1; transform: translateY(0); }
+
+        .app-chip {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #151515 100%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 50px;
+            padding: 10px 22px 10px 10px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .app-chip img {
+            width: 34px; height: 34px;
+            border-radius: 9px;
+            display: block;
+        }
+
+        .app-chip:hover {
+            transform: translateY(-4px);
+            border-color: rgba(2, 0, 255, 0.55);
+            box-shadow: 0 10px 28px rgba(2, 0, 255, 0.28);
+            color: #fff;
+        }
+
         .project {
             position: relative;
             z-index: 1;
             margin-bottom: 70px;
+            scroll-margin-top: 130px;
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.8s;
@@ -826,6 +870,10 @@
             .project-description { text-align: center; }
             .shots, .cap-grid, .approach-grid { grid-template-columns: 1fr; }
             .footer-links { flex-direction: column; gap: 18px; }
+            .app-index { gap: 10px; margin-bottom: 50px; }
+            .app-chip { padding: 8px 18px 8px 8px; font-size: 0.95em; }
+            .app-chip img { width: 28px; height: 28px; }
+            .project { scroll-margin-top: 180px; }
         }
     </style>
 </head>
@@ -866,7 +914,7 @@
     <section class="stats">
         <div class="stats-grid">
             <div class="stat-item">
-                <span class="stat-number">2</span>
+                <span class="stat-number">4</span>
                 <span class="stat-label">Apps on the App Store</span>
             </div>
             <div class="stat-item">
@@ -898,10 +946,114 @@
     <section class="portfolio" id="work">
         <div class="container">
             <h2 class="section-title">Our Apps</h2>
-            <p class="section-subtitle">Shipped products, live on the App Store — designed, built, and maintained in-house.</p>
+            <p class="section-subtitle">Four shipped products, live on the App Store — designed, built, and maintained in-house.</p>
+
+            <!-- Quick jump -->
+            <div class="app-index">
+                <a class="app-chip" href="#swapfox"><img src="swapfox_icon.png" alt="">Swapfox</a>
+                <a class="app-chip" href="#plcio"><img src="plcio_icon.png" alt="">PLC IO Checkout</a>
+                <a class="app-chip" href="#inqora"><img src="inqora_icon.png" alt="">INQORA</a>
+                <a class="app-chip" href="#fleetgpu"><img src="Fleet_GPU_modern_2.png" alt="">Fleet GPU</a>
+            </div>
+
+            <!-- Swapfox -->
+            <div class="project" id="swapfox">
+                <div class="project-header">
+                    <img src="swapfox_icon.png" alt="Swapfox app icon" class="project-icon">
+                    <div class="project-title">
+                        <h3>Swapfox</h3>
+                        <div class="subtitle">Live Rates, No Ads, Travel Kit</div>
+                        <span class="project-status">● Live on the App Store</span>
+                    </div>
+                </div>
+
+                <p class="project-description">
+                    A currency converter built for travelers who want the real number, not a marked-up one. Swapfox covers 300+ world currencies at mid-market rates alongside crypto and precious metals, with a built-in calculator that updates every currency at once. The Fair Rate Check tool exposes the hidden markup a bank or exchange booth took, and a camera scanner converts menus and price tags on the spot. Rates cache for offline use, and nothing about you leaves the device.
+                </p>
+
+                <div class="project-badges">
+                    <span class="badge">SwiftUI</span>
+                    <span class="badge">300+ Currencies</span>
+                    <span class="badge">Crypto &amp; Metals</span>
+                    <span class="badge">Camera Scan</span>
+                    <span class="badge">Offline Rates</span>
+                    <span class="badge">Rate Charts</span>
+                    <span class="badge">No Ads or Tracking</span>
+                </div>
+
+                <a href="https://apps.apple.com/us/app/swapfox/id6812849417" class="appstore-link" target="_blank" rel="noopener">Download on the App Store</a>
+
+                <div class="shots">
+                    <div class="shot-card">
+                        <img src="swapfox-screenshot-1.png" alt="Swapfox currency converter" loading="lazy">
+                        <h4>Every Currency, One Screen</h4>
+                        <p>Type a calculation straight into the converter and watch every currency on your list update at live mid-market rates.</p>
+                    </div>
+                    <div class="shot-card">
+                        <img src="swapfox-screenshot-2.png" alt="Swapfox rate charts" loading="lazy">
+                        <h4>Exchange at the Right Moment</h4>
+                        <p>Rate charts from one week to five years, with highs, lows, and spread so you can time a conversion instead of guessing.</p>
+                    </div>
+                    <div class="shot-card">
+                        <img src="swapfox-screenshot-3.png" alt="Swapfox price tag scanning" loading="lazy">
+                        <h4>Point, Scan, Know the Price</h4>
+                        <p>Aim the camera at a menu or price tag and every figure comes back converted into your home currency.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="project-divider">
+
+            <!-- PLC IO Checkout -->
+            <div class="project" id="plcio">
+                <div class="project-header">
+                    <img src="plcio_icon.png" alt="PLC IO Checkout app icon" class="project-icon">
+                    <div class="project-title">
+                        <h3>PLC IO Checkout</h3>
+                        <div class="subtitle">PLC Commissioning &amp; Punch List</div>
+                        <span class="project-status">● Live on the App Store</span>
+                    </div>
+                </div>
+
+                <p class="project-description">
+                    Field commissioning for controls engineers, off the clipboard and onto the phone. Import an I/O list from CSV, walk the panel point by point marking Pass, Fail, Punch List, or N/A, and attach photos as evidence — every change timestamped and initialed automatically. Punch items keep their history from original failure through resolution, and one tap produces a signed PDF report with your logo, client details, point tables, and a photo appendix. Fully offline, no account, no cloud.
+                </p>
+
+                <div class="project-badges">
+                    <span class="badge">SwiftUI</span>
+                    <span class="badge">CSV Import</span>
+                    <span class="badge">Punch List Tracking</span>
+                    <span class="badge">Photo Evidence</span>
+                    <span class="badge">PDF Reports</span>
+                    <span class="badge">Digital Signature</span>
+                    <span class="badge">Fully Offline</span>
+                </div>
+
+                <a href="https://apps.apple.com/us/app/plc-io-checkout/id6810327015" class="appstore-link" target="_blank" rel="noopener">Download on the App Store</a>
+
+                <div class="shots">
+                    <div class="shot-card">
+                        <img src="plcio-screenshot-1.png" alt="PLC IO Checkout point list" loading="lazy">
+                        <h4>Point-by-Point Verification</h4>
+                        <p>Live progress across the whole I/O list with pass, fail, and punch counts, filters, and full tag, address, and terminal detail on every point.</p>
+                    </div>
+                    <div class="shot-card">
+                        <img src="plcio-screenshot-2.png" alt="PLC IO Checkout punch list" loading="lazy">
+                        <h4>Punch List That Keeps History</h4>
+                        <p>Open and resolved items side by side, each carrying the original failure note, timestamp, and what it took to close it out.</p>
+                    </div>
+                    <div class="shot-card">
+                        <img src="plcio-screenshot-3.png" alt="PLC IO Checkout PDF report" loading="lazy">
+                        <h4>Signed Reports on Site</h4>
+                        <p>Capture an inspector signature, generate a client-ready PDF with photo appendix, and export the full results as CSV for Excel.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="project-divider">
 
             <!-- INQORA -->
-            <div class="project">
+            <div class="project" id="inqora">
                 <div class="project-header">
                     <img src="inqora_icon.png" alt="INQORA app icon" class="project-icon">
                     <div class="project-title">
@@ -948,7 +1100,7 @@
             <hr class="project-divider">
 
             <!-- Fleet GPU -->
-            <div class="project">
+            <div class="project" id="fleetgpu">
                 <div class="project-header">
                     <img src="Fleet_GPU_modern_2.png" alt="Fleet GPU app icon" class="project-icon">
                     <div class="project-title">
@@ -1037,6 +1189,11 @@
                     <p>Real-time telemetry interfaces for infrastructure and hardware, with alerting, background refresh, and metrics that stay readable under load.</p>
                 </div>
                 <div class="cap-card">
+                    <div class="cap-icon">📄</div>
+                    <h3>Reporting &amp; Document Export</h3>
+                    <p>Client-ready PDF generation, CSV export, and signature capture built directly into the app, so the paperwork leaves the job site with you.</p>
+                </div>
+                <div class="cap-card">
                     <div class="cap-icon">🔗</div>
                     <h3>API &amp; Backend Integration</h3>
                     <p>Reliable connections to third-party REST APIs, push notification services, and custom backends — with sane error handling and offline behavior.</p>
@@ -1045,6 +1202,11 @@
                     <div class="cap-icon">⚙️</div>
                     <h3>Industrial &amp; Embedded</h3>
                     <p>PLC programming, HMI development, motion control, and manufacturing system integration, informed by fifteen-plus years of controls engineering.</p>
+                </div>
+                <div class="cap-card">
+                    <div class="cap-icon">🧰</div>
+                    <h3>Field &amp; Commissioning Tools</h3>
+                    <p>Offline-first apps for technicians working in panels and plants, where there is no signal, no time, and no tolerance for lost data.</p>
                 </div>
             </div>
         </div>
@@ -1084,7 +1246,7 @@
     <section class="contact" id="contact">
         <div class="contact-inner">
             <h2>Have an App in Mind?</h2>
-            <p class="contact-lead">Tell us what you're trying to build. Whether it's a focused utility, a monitoring tool, or something nobody's made yet, we'd like to hear about it.</p>
+            <p class="contact-lead">Tell us what you're trying to build. Whether it's a focused utility, a monitoring tool, a field app for your crew, or something nobody's made yet, we'd like to hear about it.</p>
             <div class="contact-methods">
                 <div class="contact-chip">
                     <strong>Email</strong>
@@ -1142,7 +1304,7 @@
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('.section-title, .section-subtitle, .about-content, .project, .cap-card, .approach-item, .stat-item, .contact h2').forEach(el => observer.observe(el));
+        document.querySelectorAll('.section-title, .section-subtitle, .about-content, .app-index, .project, .cap-card, .approach-item, .stat-item, .contact h2').forEach(el => observer.observe(el));
 
         // The address is never rendered as text and never appears in the page source.
         // It is decoded only at click time, so crawlers find nothing to harvest.
